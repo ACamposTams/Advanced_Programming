@@ -8,14 +8,12 @@ int const wordBuffer = 10;
 
 // function used to find how many time a certain word is repeated in a sentence, the funciton returns an int
 int findWord(char *,char *,int,int);
-//int findWord(char[lineBuffer],char[wordBuffer],int,int);
 
 int main ()
 {
   // array of chars used to fill in with the sentence
   char lineEntered[lineBuffer];
   memset(lineEntered,' ', lineBuffer*sizeof(char));
-  //*(lineEntered+0) = " ";
   // array of chars used to fill with the word that will be searched
   char word[wordBuffer];
   memset(word,' ', wordBuffer*sizeof(char));
@@ -24,7 +22,7 @@ int main ()
   printf("Enter the line in which the word will be searched for (limit to 100 characters): ");
   fgets(lineEntered,lineBuffer,stdin);
 
-  // the yser is asked for the word that will be searched for, ot is limited to 10 characters
+  // the yser is asked for the word that will be searched for, it is limited to 10 characters
   printf("Enter the word that will be searched for in the line (limit to 10 characters): ");
   fgets(word,wordBuffer,stdin);
 
@@ -35,7 +33,8 @@ int main ()
   int sizeWord = strlen(word) - 1;
 
   // int variable that recieves the number of times the word is found in a sentence
-  int timesFound = findWord(lineEntered,word,sizeLine,sizeWord);
+  int timesFound = 0;
+  timesFound = findWord(lineEntered,word,sizeLine,sizeWord);
 
   // the user is shown how many times the word is repeated in the sentence
   printf("The word was found %i times\n",timesFound);
@@ -54,13 +53,13 @@ int findWord(char * line, char * word, int sizeLine, int sizeWord)
   // for structure used to travel along the array of the sentence seearching for the asked word
   for (i=0; i< sizeLine;i++)
   {
-    // the character in the sentence is compared to the character in the word usin ASCII code, it counts capitalized letters so that every word can be found regardless of capitalization
+    // the character in the sentence is compared to the character in the word usin ASCII code, it counts capitalized letters so that every letter can be found regardless of capitalization
     if (*(line+i) == *(word+j) || *(line+i) + 32 == *(word+j) || *(line+i) == *(word+j) + 32 )
     {
       // if it is the first letter of the word that was found the previous character in the sentence is reviewed
       if (j == 0)
       {
-        // the previous characer is reviewed, if it is a letter, the the word is contained in another word and it doesn't count, for example fable and able are different words
+        // the previous character is reviewed, if it is a letter, then the word is contained in another word and it doesn't count, for example fable and able are different words
         if (*(line+i-1) < 65 ||  *(line+i-1) > 122)
         {
           // if the previous character isn't a letter the the words may be the same
