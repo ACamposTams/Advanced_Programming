@@ -7,7 +7,8 @@ int const lineBuffer = 100;
 int const wordBuffer = 10;
 
 // function used to find how many time a certain word is repeated in a sentence, the funciton returns an int
-int findWord(char[lineBuffer],char[wordBuffer],int,int);
+int findWord(char *,char *,int,int);
+//int findWord(char[lineBuffer],char[wordBuffer],int,int);
 
 int main ()
 {
@@ -41,7 +42,7 @@ int main ()
 }
 
 // function used to find how many time a certain word is repeated in a sentence, the funciton returns an int
-int findWord(char line[lineBuffer], char word[wordBuffer], int sizeLine, int sizeWord)
+int findWord(char * line, char * word, int sizeLine, int sizeWord)
 {
   // the variables to travel along the arrays are set, i and j
   int i = 0;
@@ -53,17 +54,36 @@ int findWord(char line[lineBuffer], char word[wordBuffer], int sizeLine, int siz
   // for structure used to travel along the array of the sentence seearching for the asked word
   for (i=0; i< sizeLine;i++)
   {
-    // the character in the sentence is compared to the character in the word
-    if (*(line+i) == *(word+j))
+    // the character in the sentence is compared to the character in the word usin ASCII code, it counts capitalized letters so that every word can be found regardless of capitalization
+    if (*(line+i) == *(word+j) || *(line+i) + 32 == *(word+j) || *(line+i) == *(word+j) + 32 )
     {
-      // if the characters match then the next character in the word will be compare dto the next character in the sentence
-      j++;
-      // if j is the same as the sixe of the word, then the same word has been found in the line
+      // if it is the first letter of the word that was found the previous character in the sentence is reviewed
+      if (j == 0)
+      {
+        // the previous characer is reviewed, if it is a letter, the the word is contained in another word and it doesn't count, for example fable and able are different words
+        if (*(line+i-1) < 65 ||  *(line+i-1) > 122)
+        {
+          // if the previous character isn't a letter the the words may be the same
+          j++;
+        }
+        else
+        {
+          // since the letter matches but the word wont be found the comparison begins again
+          j = 0;
+        }
+      }
+      else
+      {
+        // if it isn't the first letter then the comparison continues
+        j++;
+      }
+      // if the characters match then the next character in the word will be compared to the next character in the sentence
+      // if j is the same as the size of the word, then the same word has been found in the line
       if (j == sizeWord)
       {
         // another if is used to determine it is the exact same word, for example the word for is found in the word form but that doesn't mean the word for has appeared
         // therefore the next character in the sentence is evaluated
-        if (*(line+i+1) == ' ' || *(line+i+1) == '\n' || *(line+i+1) == ',' || *(line+i+1) == '.' || *(line+i+1) == ';')
+        if (*(line+i+1) < 65 ||  *(line+i+1) > 122)
         {
           // if the next character in the sentence is something different than a letter then the word has been found in the sentence and a repetition is found
           repetitions++;
