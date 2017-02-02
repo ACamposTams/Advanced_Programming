@@ -32,5 +32,8 @@ void writeInversionToFile(struct colors ** invertedImageColors,struct settings c
 //function used to call take the colors from the original image array and convert them to the inverted colors to be laet on added to a ppm file
 void type3Invertion(struct settings currentImage,FILE * originalFile);
 
+//function used to call take the colors from the original image array and convert them to the inverted colors to be laet on added to a ppm file
+void type6Invertion(struct settings currentImage,FILE * originalFile);
+
 // function used to start reading the original image file and call the type of invertion according to the type of format the image has
 void invertImage(FILE * originalFile);
